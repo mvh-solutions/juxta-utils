@@ -1,2 +1,2 @@
 # juxta-utils
-Utilities for working withXenizo Juxtalinear JSON
+Utilities for working with Xenizo Juxtalinear JSON

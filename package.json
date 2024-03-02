@@ -1,0 +1,23 @@
+{
+  "name": "juxta-utils",
+  "version": "0.0.1",
+  "description": "Utilities for working with Xenizo Juxtalinear JSON",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mvh-solutions/juxta-utils.git"
+  },
+  "author": "Mark Howe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mvh-solutions/juxta-utils/issues"
+  },
+  "homepage": "https://github.com/mvh-solutions/juxta-utils#readme",
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "path": "^0.12.7"
+  }
+}
