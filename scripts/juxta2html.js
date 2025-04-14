@@ -7,7 +7,7 @@ let table = [
     '<tbody>'
 ];
 let sentenceN = 1;
-for (const sentence of juxta) {
+for (const sentence of juxta.sentences ? juxta.sentences : juxta) {
     let rows = []
     let chunkN = 0;
     for (const chunk of sentence.chunks) {

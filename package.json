@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mvh-solutions/juxta-utils#readme",
   "dependencies": {
     "fs-extra": "^11.2.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "uuid": "^11.1.0"
   }
 }
