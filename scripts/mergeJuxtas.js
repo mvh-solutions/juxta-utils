@@ -12,7 +12,7 @@ let toJuxtaJson = toJuxta.bookCode ? toJuxta.sentences : toJuxta;
 const fromStart = parseInt(process.argv[4]) - 1;
 const fromEnd = parseInt(process.argv[5]) - 1;
 
-for (const [fromSentenceN, sentence] of [...fromJuxtaJson.entries()].slice(fromStart, fromEnd)) {
+for (const [fromSentenceN, sentence] of [...fromJuxtaJson.entries()].slice(fromStart, fromEnd + 1)) {
     toJuxtaJson[fromSentenceN + fromStart] = sentence;
 }
 
