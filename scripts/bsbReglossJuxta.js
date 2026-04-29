@@ -134,13 +134,13 @@ for (const sentence of jxlJson) {
     sentenceN++;
 }
 // Rework Greek
-/*for (let [sentenceN, sentence] of jxlJson.entries()) {
+for (let [sentenceN, sentence] of jxlJson.entries()) {
     for (const chunk of sentence.chunks) {
-        console.log(JSON.stringify(chunk, null, 2));
+        if (chunk.source.length == 2 && chunk.source[0].morph[1] == "N" && chunk.source[1].morph[1] == "AA") {
+            chunk.source = [chunk.source[1], chunk.source[0]];
+        }
     }
-    process.exit(0);
 }
-*/
 // Regloss
 for (let [sentenceN, sentence] of jxlJson.entries()) {
     for (const chunk of sentence.chunks) {
