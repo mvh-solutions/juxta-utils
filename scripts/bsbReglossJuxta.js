@@ -175,14 +175,14 @@ for (let [sentenceN, sentence] of jxlJson.entries()) {
       chunk.source.filter((s) => s.content.includes("ἡμῶν")).length > 0;
     const hasEnglishUs = chunk.gloss.includes("our");
     if (hasGreekUs && hasEnglishUs) {
-      // console.log("of-us", chunk.gloss);
+      console.error(chunk.source[0].cv, "of-us", chunk.gloss);
       chunk.gloss.replace("our", "of-us");
     }
     const hasGreekYour =
       chunk.source.filter((s) => s.content.includes("ὑμῶν")).length > 0;
     const hasEnglishYour = chunk.gloss.includes("your");
     if (hasGreekYour && hasEnglishYour) {
-      // console.log("of-you", chunk.gloss);
+      console.error(chunk.source[0].cv, "of-you pluriel", chunk.gloss);
       chunk.gloss.replace("your", "of-you");
     }
     // emou after noun, by morphology cos optional accents
@@ -195,7 +195,8 @@ for (let [sentenceN, sentence] of jxlJson.entries()) {
         source.morph[4] === "1G" &&
         source.morph[5] === "S"
       ) {
-        console.log(source);
+        console.error(chunk.source[0].cv, "of-me gen", chunk.gloss);
+        chunk.gloss = chunk.gloss.replace("-my", "of-me");
       }
       if (
         sourceN > 0 &&
@@ -204,9 +205,10 @@ for (let [sentenceN, sentence] of jxlJson.entries()) {
         source.morph[4] === "2G" &&
         source.morph[5] === "S"
       ) {
-        console.log(source);
+        console.error(chunk.source[0].cv, "of-you sing", chunk.gloss);
+        chunk.gloss = chunk.gloss.replace("-your", "of-you");
       }
     }
   }
 }
-// console.log(JSON.stringify(jxlJson, null, 2));
+console.log(JSON.stringify(jxlJson, null, 2));
