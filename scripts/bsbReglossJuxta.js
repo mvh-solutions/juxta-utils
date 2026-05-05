@@ -135,10 +135,17 @@ for (const sentence of jxlJson) {
 }
 // Rework Greek
 for (let [sentenceN, sentence] of jxlJson.entries()) {
-    for (const chunk of sentence.chunks) {
+    for (const [chunkN, chunk] of sentence.chunks.entries()) {
         if (chunk.source.length == 2 && chunk.source[0].morph[1] == "N" && chunk.source[1].morph[1] == "AA") {
             chunk.source = [chunk.source[1], chunk.source[0]];
         }
+        // TODO Need sliding window
+        /*
+        const egoSource = chunk.source.filter()
+        if (chunkN > 0 && chunk.source.lemma.includes["ἐγώ"] && chunk.source.morph[1] === "RP" && chunk.source.morph[4] === "1G") {
+            console.log(chunk.source);
+        }
+        */
     }
 }
 // Regloss
@@ -151,21 +158,32 @@ for (let [sentenceN, sentence] of jxlJson.entries()) {
             if (bsbLookup[cv] && bsbLookup[cv][greekWord]) {
                 chunkGlossBits.push(
                     bsbLookup[cv][greekWord]
-                    .replace("-", "_")
-                    .split(" ")
-                    .join("-")
-                    .replace("[", "*")
-                    .replace("]", "*")
-                    .replace("vvv", ">")
-                    .replace(/(of-[^’]+)’s/, "$1")
-                    .replace(/([^’-]+)’s/g, "of-$1")
+                        .replace("-", "_")
+                        .split(" ")
+                        .join("-")
+                        .replace("[", "*")
+                        .replace("]", "*")
+                        .replace("vvv", ">")
+                        .replace(/(of-[^’]+)’s/, "$1")
+                        .replace(/([^’-]+)’s/g, "of-$1")
                 );
             } else {
                 chunkGlossBits.push(`?${greekWord}?`);
             }
         }
         chunk.gloss = chunkGlossBits.join(" ");
-        // console.log(`${chunk.gloss} => ${chunk.gloss2}`);
-    }
+        const hasGreekUs = chunk.source.filter(s => s.content.includes("ἡμῶν")).length > 0;
+        const hasEnglishUs = chunk.gloss.includes("our");
+        if (hasGreekUs && hasEnglishUs) {
+            // console.log("of-us", chunk.gloss);
+            chunk.gloss.replace("our", "of-us");
+        }
+        const hasGreekYour = chunk.source.filter(s => s.content.includes("ὑμῶν")).length > 0;
+        const hasEnglishYour = chunk.gloss.includes("your");
+        if (hasGreekYour && hasEnglishYour) {
+            // console.log("of-you", chunk.gloss);
+            chunk.gloss.replace("your", "of-you");
+        }
+   }
 }
-console.log(JSON.stringify(jxlJson, null, 2));
+// console.log(JSON.stringify(jxlJson, null, 2));
