@@ -106,7 +106,8 @@ const bsbTsv = fse
   .split("\n")
   .slice(1)
   .map((l) => l.split("\t"))
-  .filter((l) => l.length > 7);
+  .filter((l) => l.length > 6);
+  console.log(bsbTsv)
 // BSB alignment as JSON
 const bsbLookup = {};
 for (const bsbLine of bsbTsv) {
@@ -176,14 +177,14 @@ for (let [sentenceN, sentence] of jxlJson.entries()) {
     const hasEnglishUs = chunk.gloss.includes("our");
     if (hasGreekUs && hasEnglishUs) {
       console.error(chunk.source[0].cv, "of-us", chunk.gloss);
-      chunk.gloss.replace("our", "of-us");
+      chunk.gloss = chunk.gloss.replace("our", "of-us");
     }
     const hasGreekYour =
       chunk.source.filter((s) => s.content.includes("ὑμῶν")).length > 0;
     const hasEnglishYour = chunk.gloss.includes("your");
     if (hasGreekYour && hasEnglishYour) {
       console.error(chunk.source[0].cv, "of-you pluriel", chunk.gloss);
-      chunk.gloss.replace("your", "of-you");
+      chunk.gloss = chunk.gloss.replace("your", "of-you");
     }
     // emou after noun, by morphology cos optional accents
     let chunkSourceEntries = [...chunk.source.entries()];

@@ -1,0 +1,17 @@
+{
+  "name": "alignedusfm2table",
+  "version": "0.0.1",
+  "description": "Build BSB-style alignment table from uW aligned USFM, eg ULT",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mark Howe",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^11.3.4",
+    "path": "^0.12.7",
+    "proskomma-core": "^0.11.3",
+    "proskomma-json-tools": "^0.9.1"
+  }
+}
