@@ -107,7 +107,6 @@ const bsbTsv = fse
   .slice(1)
   .map((l) => l.split("\t"))
   .filter((l) => l.length > 6);
-  console.log(bsbTsv)
 // BSB alignment as JSON
 const bsbLookup = {};
 for (const bsbLine of bsbTsv) {

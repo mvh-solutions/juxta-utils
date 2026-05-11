@@ -96,14 +96,27 @@ const actions = {
         let tsvBits = [];
         tsvBits.push("book\tchapter\tverse\tsort\tgreek\tstrong\tult\tpnc");
         let count = 1;
-        for(const alignment of output.alignments) {
-            tsvBits.push(`PHP\t${alignment.chapter}\t${alignment.verses}\t${count}\t${alignment.greek.join(" ")}\t${alignment.strong.join(" ")}\t${alignment.english.join("-")}\tpnc`);
-        count++;
+        for (const alignment of output.alignments) {
+          if (alignment.greek.length > 1) {
+            for (const [n, greekWord] of [...alignment.greek.entries()]
+              .reverse()
+              .slice(1)
+              .reverse()) {
+              tsvBits.push(
+                `PHP\t${alignment.chapter}\t${alignment.verses}\t${count}\t${greekWord}\t${alignment.strong[n]}\t${"vvv"}\tpnc`,
+              );
+              count++;
+            }
+          }
+          tsvBits.push(
+            `PHP\t${alignment.chapter}\t${alignment.verses}\t${count}\t${alignment.greek[alignment.greek.length - 1]}\t${alignment.strong[alignment.greek.length - 1]}\t${alignment.english.join("-")}\tpnc`,
+          );
+          count++;
         }
         console.log(tsvBits.join("\n"));
       },
     },
-  ]
+  ],
 };
 
 const usfmString = fse.readFileSync(path.resolve(process.argv[2])).toString();
