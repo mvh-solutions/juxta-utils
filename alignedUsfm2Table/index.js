@@ -3,8 +3,8 @@ const path = require("path");
 const { Proskomma } = require("proskomma-core");
 const { PerfRenderFromProskomma, render } = require("proskomma-json-tools");
 
-const usage = "USAGE: node index.js <usfmPath";
-if (process.argv.length !== 3) {
+const usage = "USAGE: node index.js <usfmPath> <bookCode>";
+if (process.argv.length !== 4) {
   console.log(usage);
   process.exit(1);
 }
@@ -87,6 +87,16 @@ const actions = {
         }
       },
     },
+        {
+      description: "Non-aligned text",
+      test: ({ workspace }) => true,
+      action: ({ workspace, context }) => {
+        const text = context.sequences[0].element.text.trim();
+        if (text.length > 0) {
+          console.error("UNALIGNED", text.trim());
+        }
+      },
+    },
   ],
   endDocument: [
     {
@@ -103,13 +113,13 @@ const actions = {
               .slice(1)
               .reverse()) {
               tsvBits.push(
-                `PHP\t${alignment.chapter}\t${alignment.verses}\t${count}\t${greekWord}\t${alignment.strong[n]}\t${"vvv"}\tpnc`,
+                `${process.argv[3]}\t${alignment.chapter}\t${alignment.verses}\t${count}\t${greekWord}\t${alignment.strong[n]}\t${"vvv"}\tpnc`,
               );
               count++;
             }
           }
           tsvBits.push(
-            `PHP\t${alignment.chapter}\t${alignment.verses}\t${count}\t${alignment.greek[alignment.greek.length - 1]}\t${alignment.strong[alignment.greek.length - 1]}\t${alignment.english.join("-")}\tpnc`,
+            `${process.argv[3]}\t${alignment.chapter}\t${alignment.verses}\t${count}\t${alignment.greek[alignment.greek.length - 1]}\t${alignment.strong[alignment.greek.length - 1]}\t${alignment.english.join("-")}\tpnc`,
           );
           count++;
         }
