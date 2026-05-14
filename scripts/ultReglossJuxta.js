@@ -114,7 +114,14 @@ for (const bsbLine of bsbTsv) {
   if (!bsbLookup[cv]) {
     bsbLookup[cv] = [];
   }
-  bsbLookup[cv][bsbLine[4].toLowerCase()] = bsbLine[6];
+  if (
+    bsbLookup[cv][bsbLine[4].toLowerCase()] &&
+    bsbLookup[cv][bsbLine[4].toLowerCase()] !== bsbLine[6]
+  ) {
+    bsbLookup[cv][bsbLine[4].toLowerCase()] += `-${bsbLine[6]}`;
+  } else {
+    bsbLookup[cv][bsbLine[4].toLowerCase()] = bsbLine[6];
+  }
 }
 // Find breaks for whole sentence/whole verse
 const sentenceMerges = []; // True means "merge with next sentence"

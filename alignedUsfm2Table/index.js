@@ -83,17 +83,17 @@ const actions = {
       action: ({ workspace, context }) => {
         const text = context.sequences[0].element.text.trim();
         if (text.length > 0) {
-          workspace.currentAlignment.english.push(text.trim());
+          workspace.currentAlignment.english.push(text);
         }
       },
     },
-        {
+    {
       description: "Non-aligned text",
       test: ({ workspace }) => true,
       action: ({ workspace, context }) => {
         const text = context.sequences[0].element.text.trim();
         if (text.length > 0) {
-          console.error("UNALIGNED", text.trim());
+          console.error("UNALIGNED", text);
         }
       },
     },
