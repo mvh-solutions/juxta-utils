@@ -49,21 +49,21 @@ const morphLookup = [
     P: "part",
     N: "inf",
     S: "subj",
-    M: "impér",
+    M: "imper",
     O: "opt",
   },
   {
     A: "aor",
-    P: "prés",
+    P: "pres",
     I: "impft",
     F: "fut",
-    E: "parf",
+    E: "perf",
     L: "pqp",
   },
   {
     A: "act",
     P: "pass",
-    M: "moy",
+    M: "mid",
   },
   {
     1: "1",
@@ -114,13 +114,12 @@ for (const bsbLine of bsbTsv) {
   if (!bsbLookup[cv]) {
     bsbLookup[cv] = [];
   }
-  if (
-    bsbLookup[cv][bsbLine[4].toLowerCase()] &&
-    bsbLookup[cv][bsbLine[4].toLowerCase()] !== bsbLine[6]
-  ) {
-    bsbLookup[cv][bsbLine[4].toLowerCase()] += `-${bsbLine[6]}`;
+  if (bsbLookup[cv][bsbLine[4].toLowerCase()]) {
+    if (!bsbLookup[cv][bsbLine[4].toLowerCase()].includes(bsbLine[6])) {
+      bsbLookup[cv][bsbLine[4].toLowerCase()].push(bsbLine[6]);
+    }
   } else {
-    bsbLookup[cv][bsbLine[4].toLowerCase()] = bsbLine[6];
+    bsbLookup[cv][bsbLine[4].toLowerCase()] = [bsbLine[6]];
   }
 }
 // Find breaks for whole sentence/whole verse
@@ -164,7 +163,6 @@ for (let [sentenceN, sentence] of jxlJson.entries()) {
       if (bsbLookup[cv] && bsbLookup[cv][greekWord]) {
         chunkGlossBits.push(
           bsbLookup[cv][greekWord]
-            .split(" ")
             .join("-")
             .replace(/[{}]/g, "")
             .replace("vvv", ">")
